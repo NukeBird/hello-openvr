@@ -59,9 +59,13 @@ public:
 
     }
 
-    void shutdown()
+    ~Application()
     {
-
+        if (m_pHMD)
+        {
+            vr::VR_Shutdown();
+            m_pHMD = nullptr;
+        }
     }
 private:
     glm::mat4 GetHMDMatrixProjectionEye(vr::Hmd_Eye nEye)
@@ -168,7 +172,6 @@ int main(int argc, char** argv)
 
         if (!app.init())
         {
-            app.shutdown();
             glfwTerminate();
             return -1;
         }
@@ -181,7 +184,6 @@ int main(int argc, char** argv)
             glfwPollEvents();
         }
 
-        app.shutdown();
         glfwTerminate();
     }
 
